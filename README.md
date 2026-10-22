@@ -320,6 +320,12 @@ skill-invoice-reimbursement/
 - `1`：有问题需要处理（解析需人工复核、构建缺文件、终审失败）
 - `2`：参数错误（如输出目录已存在且未加 `--force`）
 
+依赖与停止条件：
+
+- 第三方依赖：`pdfplumber`、`openpyxl`，OFD 可选 `easyofd`；均通过 `pip install -r requirements.txt` 安装，仓库不内嵌第三方代码。
+- 任一脚本返回非 0 即停止后续步骤；`check_delivery.py` 有 ERROR 时不交付。
+- `--force`（删除输出目录）和 `--apply`（移动重复件）需明确授权，执行前先确认路径。
+
 ---
 
 ## 文档
@@ -382,7 +388,8 @@ git log -p --all | grep -nE "纳税人识别号|发票号码|订单号" || true
 
 - 作者：`glong888`（HQU-AIoT）
 - 维护状态：可用（usable）— 已完成基本测试，适合一般报销整理任务。
-- 适用平台：Windows / macOS / Linux；Python 3.10+。
+- 适用客户端：ZCode / Claude Code / Codex / 兼容 Agent Skills 的客户端。
+- 运行环境：Windows / macOS / Linux；Python 3.10+。
 - 反馈：欢迎在 [Issues](https://github.com/HQU-AIot/skill-invoice-reimbursement/issues) 提交脱敏后的版式或平台样本。
 
 ---
