@@ -19,8 +19,79 @@
 
 ---
 
+## AI 怎么调用这个 Skill（重点）
+
+这个仓库不是一个双击运行的软件，而是一套 **Agent Skill**。调用链是：
+
+```text
+你说任务
+  → 客户端用 SKILL.md 的 name / description 匹配意图
+  → 加载 SKILL.md
+  → Agent 按需读 references/
+  → Agent 运行 scripts/
+  → 交付财务报表、核对报告、交付文件夹
+```
+
+`agents/openai.yaml` 提供客户端界面信息（显示名、短描述、默认调用语）；`references/` 是细节；`scripts/` 是确定性工具。
+
+### 方式一：自动触发（推荐）
+
+直接用自然语言描述任务，`description` 里的触发词会命中：
+
+- “帮我整理这个文件夹里的发票，算出能报多少钱。”
+- “核对发票和实付金额，看看还缺哪些截图。”
+- “这批发票有没有重复的？帮我重新编号。”
+- “生成财务报表和报销交付文件夹。”
+- “最后审查一次再交付。”
+
+### 方式二：显式调用
+
+| 客户端 | 写法 | 说明 |
+|---|---|---|
+| ZCode | `/invoice-reimbursement 整理 D:\...\发票汇总` | 斜杠命令使用 `SKILL.md` 的 `name` |
+| Codex | `$invoice-reimbursement 整理 D:\...\发票汇总` | 对应 `agents/openai.yaml` 的默认提示 |
+| Claude Code / 通用 Agent | `使用 invoice-reimbursement skill 整理 D:\...\发票汇总` | 自然语言点名；支持斜杠命令时也可用 `/invoice-reimbursement` |
+| 纯 CLI | `python scripts/parse_invoice.py ...` | 不经过 Agent，见下文 |
+
+> 调用名是 **`invoice-reimbursement`**，不是仓库名 `skill-invoice-reimbursement`。仓库名遵循组织 `skill-功能名称` 规范；技能名由 `SKILL.md` 的 `name` 决定。
+
+### 方式三：直接跑脚本
+
+不想用 Agent，或要在 CI/批处理里跑：
+
+```bash
+python scripts/parse_invoice.py 01_电子发票/*.pdf \
+  --buyer-name "你的单位名称" \
+  --buyer-tax-id "你的单位税号" \
+  --json invoices.json
+
+python scripts/dedupe.py --root .
+python scripts/build_delivery.py --manifest manifest.json --out 报销交付_YYYYMMDD --workbook 财务报表.xlsx
+python scripts/check_delivery.py --manifest manifest.json --delivery 报销交付_YYYYMMDD --workbook 财务报表.xlsx
+```
+
+### 最小调用示例
+
+```text
+使用 invoice-reimbursement 整理 D:\path\to\发票汇总。
+
+购买方：<单位名称>；税号：<单位税号>。
+
+要求：先备份；解析发票、校验金额/大小写/号码/抬头；按 MD5 和发票号去重；
+把发票与订单、支付做三方匹配；只把证据链完整的项目入表，序号 01..N 连续；
+缺材料的放待补文件夹并写“缺什么.txt”；生成财务报表、核对报告和报销交付_YYYYMMDD；
+最后跑 check_delivery.py 终审，告诉我总张数、总金额、待补数量和终审结果。
+```
+
+Agent 加载后会自动读 `SKILL.md` 和相关 `references/`，按流程执行；遇到同金额多笔、订单取消、规格不一致等歧义会先问你，不会猜。
+
+完整的调用链、客户端差异、按场景的 prompt 模板、没触发时怎么排查，见 **[docs/AI调用说明.md](docs/AI调用说明.md)**。
+
+---
+
 ## 目录
 
+- [AI 怎么调用这个 Skill](#ai-怎么调用这个-skill重点)
 - [演示视频](#演示视频)
 - [它解决什么问题](#它解决什么问题)
 - [核心能力](#核心能力)
@@ -55,7 +126,7 @@
 - 同一张发票下载了三次，文件名不同，重复入表。
 - 有发票、有支付，但订单截图找不到，财务打回。
 - 订单已取消，发票还在，报了就是错账。
-- 交付文件夹里 39 张发票、39 张详情、38 张支付，少的那张没人发现。
+- 交付文件夹里发票、详情、支付数量对不上，少的那张没人发现。
 - 财务报表里塞满备注、待补表、说明行，财务只想要一张干净的明细。
 
 这套流程把这些问题变成可检查的规则：**不合规的隔离、缺材料的待补、重复的查重、可报销的连续编号，最后逐字节终审。**
@@ -129,15 +200,9 @@ cp -r skill-invoice-reimbursement ~/.agents/skills/invoice-reimbursement
 cp -r skill-invoice-reimbursement ~/.claude/skills/invoice-reimbursement
 ```
 
-也可以放在项目的 `.zcode/skills/` 或客户端支持的插件目录。具体以你的客户端为准；核心是保留 `SKILL.md`、`references/`、`scripts/` 的相对结构。
+也可以放在项目的 `.zcode/skills/` 或客户端支持的插件目录。具体以你的客户端为准；核心是保留 `SKILL.md`、`references/`、`scripts/` 的相对结构，`agents/openai.yaml` 可选。
 
-安装后在对话里直接说：
-
-- “帮我整理这个文件夹里的发票，算出能报多少钱”
-- “核对发票和实付金额，缺哪些截图”
-- “把重复发票去掉，重新编号”
-- “生成财务报表和报销交付文件夹”
-- “最后审查一次再交付”
+安装后有三种调用方式：自动触发（自然语言）、显式调用（`/invoice-reimbursement` 或 `$invoice-reimbursement`）、直接跑脚本。完整说明和 prompt 模板见 **[docs/AI调用说明.md](docs/AI调用说明.md)**。
 
 ### 2. 安装 Python 依赖
 
@@ -212,6 +277,7 @@ python -m unittest discover -s tests -v
 ```text
 skill-invoice-reimbursement/
 ├─ SKILL.md                     # Agent Skill 主文件（触发条件、流程、原则）
+├─ agents/openai.yaml           # 客户端界面：显示名、短描述、默认调用语
 ├─ references/
 │  ├─ workflow.md               # 10 阶段详细操作
 │  ├─ verification.md           # 校验规则、版式、金额解析、分类矩阵
@@ -226,6 +292,7 @@ skill-invoice-reimbursement/
 ├─ tests/test_scripts.py        # 回归测试
 ├─ examples/manifest.example.json
 ├─ docs/
+│  ├─ AI调用说明.md             # 重点：Agent 怎么发现、加载、调用
 │  ├─ 技术文档.md
 │  ├─ 使用文档.md
 │  ├─ 演示视频脚本.md
@@ -259,6 +326,7 @@ skill-invoice-reimbursement/
 
 | 文档 | 适合谁 | 内容 |
 |---|---|---|
+| [AI 调用说明](docs/AI调用说明.md) | 想让 Agent 用起来的人 | 调用链、自动触发、`/` 与 `$` 显式调用、按场景 prompt 模板、没触发怎么排查 |
 | [技术文档](docs/技术文档.md) | 开发者 / 想改脚本的人 | 架构、数据模型、解析与校验算法、脚本 API、扩展指南、已知限制 |
 | [使用文档](docs/使用文档.md) | 第一次用的人 / 财务同事 | 安装、10 步流程、常见场景、FAQ、交付前清单 |
 | [演示视频脚本](docs/演示视频脚本.md) | 录制演示的人 | 分镜、旁白、命令、脱敏清单、上传文案 |

@@ -1,5 +1,15 @@
 # 变更记录
 
+## v1.0.1（2026-10-22）
+
+### 新增
+
+- `agents/openai.yaml`：客户端界面信息（显示名、短描述、默认调用语），支持 Codex 等读取该文件的客户端。
+- `docs/AI调用说明.md`：完整调用链、自动触发、`/invoice-reimbursement` 与 `$invoice-reimbursement` 显式调用、按场景 prompt 模板、没触发时的排查步骤。
+- README 新增醒目的“AI 怎么调用这个 Skill（重点）”章节；使用文档、技术文档、`SKILL.md` 同步补充调用方式。
+- 演示视频脚本增加“AI 怎么调用”镜头、屏幕文字和旁白。
+- `SKILL.md` 的 `description` 补充“不适用”边界，减少误触发。
+
 ## v1.0.0（2026-10-22）
 
 首个公开发布版。

@@ -1,0 +1,4 @@
+interface:
+  display_name: "发票汇总与报销核对"
+  short_description: "把发票、订单、支付截图整理成可交财务的报销包"
+  default_prompt: "使用 $invoice-reimbursement 整理这个文件夹里的发票、订单截图和支付截图：先备份，再解析、校验、去重、三方匹配，生成财务报表、核对报告和交付文件夹，最后终审。购买方名称和税号我会提供。"
