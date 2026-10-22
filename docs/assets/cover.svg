@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1220"/>
+      <stop offset="1" stop-color="#12263f"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#4cc9f0"/>
+      <stop offset="1" stop-color="#7b61ff"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1280" height="720" fill="url(#bg)"/>
+  <circle cx="1110" cy="120" r="230" fill="#4cc9f0" opacity="0.08"/>
+  <circle cx="170" cy="640" r="270" fill="#7b61ff" opacity="0.10"/>
+
+  <rect x="90" y="150" width="72" height="8" rx="4" fill="url(#accent)"/>
+  <text x="90" y="230" font-family="Microsoft YaHei, PingFang SC, Noto Sans SC, sans-serif"
+        font-size="62" font-weight="700" fill="#ffffff">发票汇总与报销核对</text>
+  <text x="94" y="286" font-family="Microsoft YaHei, PingFang SC, Noto Sans SC, sans-serif"
+        font-size="28" fill="#9fb3c8">三层核对 · 让每一分钱都对得上</text>
+
+  <g font-family="Microsoft YaHei, PingFang SC, Noto Sans SC, sans-serif" font-size="21" fill="#dbe7f3">
+    <rect x="60" y="370" width="210" height="96" rx="14" fill="#ffffff" fill-opacity="0.06" stroke="#2a4a6b"/>
+    <text x="80" y="410">发票解析</text>
+    <text x="80" y="440" font-size="16" fill="#8fa8c0">PDF / OFD / XML</text>
+
+    <rect x="300" y="370" width="210" height="96" rx="14" fill="#ffffff" fill-opacity="0.06" stroke="#2a4a6b"/>
+    <text x="320" y="410">合规校验</text>
+    <text x="320" y="440" font-size="16" fill="#8fa8c0">金额勾稽 / 抬头</text>
+
+    <rect x="540" y="370" width="210" height="96" rx="14" fill="#ffffff" fill-opacity="0.06" stroke="#2a4a6b"/>
+    <text x="560" y="410">证据匹配</text>
+    <text x="560" y="440" font-size="16" fill="#8fa8c0">发票 / 订单 / 支付</text>
+
+    <rect x="780" y="370" width="210" height="96" rx="14" fill="#ffffff" fill-opacity="0.06" stroke="#2a4a6b"/>
+    <text x="800" y="410">编号交付</text>
+    <text x="800" y="440" font-size="16" fill="#8fa8c0">01..N + 报表</text>
+
+    <rect x="1020" y="370" width="200" height="96" rx="14" fill="#ffffff" fill-opacity="0.06" stroke="#2a4a6b"/>
+    <text x="1040" y="410">终审</text>
+    <text x="1040" y="440" font-size="16" fill="#8fa8c0">MD5 / 合计 / 报告</text>
+  </g>
+
+  <g font-family="Microsoft YaHei, PingFang SC, Noto Sans SC, sans-serif" font-size="26" fill="#4cc9f0">
+    <text x="275" y="426">→</text>
+    <text x="515" y="426">→</text>
+    <text x="755" y="426">→</text>
+    <text x="995" y="426">→</text>
+  </g>
+
+  <text x="90" y="620" font-family="Microsoft YaHei, PingFang SC, Noto Sans SC, sans-serif"
+        font-size="20" fill="#7f96ad">Agent Skill · Python 3.10+ · 本地运行，不上传票据</text>
+  <text x="90" y="656" font-family="Microsoft YaHei, PingFang SC, Noto Sans SC, sans-serif"
+        font-size="16" fill="#5c7188">github.com/HQU-AIot/skill-invoice-reimbursement</text>
+</svg>

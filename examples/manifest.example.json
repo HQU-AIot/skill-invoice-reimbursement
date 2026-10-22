@@ -1,0 +1,102 @@
+{
+  "buyer": {
+    "name": "示例单位",
+    "tax_id": "91110000XXXXXXXXXX"
+  },
+  "items": [
+    {
+      "seq": 1,
+      "short": "电子元件A",
+      "item": "电子元件A 型号X1",
+      "purpose": "样品测试",
+      "qty": 1,
+      "amount": 13.25,
+      "invoice_no": "12345678901234567890",
+      "invoice_date": "2026-01-15",
+      "seller": "示例电子科技有限公司",
+      "order_no": "1234567890123456789",
+      "order_amount": 13.25,
+      "invoice_file": "01_电子发票/01_电子元件A_13.25元_发票12345678901234567890.pdf",
+      "order_files": [
+        "02_订单截图/01_电子元件A_订单13.25元_1234567890123456789.png"
+      ],
+      "payment_file": "02_订单截图/支付凭证/01_电子元件A_支付13.25元_1234567890123456789.jpg",
+      "status": "complete",
+      "note": ""
+    },
+    {
+      "seq": 2,
+      "short": "传感器B",
+      "item": "传感器B 型号S2",
+      "purpose": "样品测试",
+      "qty": 2,
+      "amount": 28.80,
+      "invoice_no": "12345678901234567891",
+      "invoice_date": "2026-01-16",
+      "seller": "示例传感器有限公司",
+      "order_no": "2234567890123456789",
+      "order_amount": 28.80,
+      "invoice_file": "01_电子发票/02_传感器B_28.80元_发票12345678901234567891.pdf",
+      "order_files": [
+        "02_订单截图/02_传感器B_订单28.80元_2234567890123456789.png"
+      ],
+      "payment_file": "02_订单截图/支付凭证/02_传感器B_支付28.80元_2234567890123456789.jpg",
+      "status": "complete",
+      "note": ""
+    },
+    {
+      "seq": 3,
+      "short": "开发板C",
+      "item": "开发板C 型号D3",
+      "purpose": "项目开发",
+      "qty": 1,
+      "amount": 99.00,
+      "invoice_no": "12345678901234567892",
+      "invoice_date": "2026-01-18",
+      "seller": "示例开发板有限公司",
+      "order_no": "SO20260118001",
+      "order_amount": 99.00,
+      "invoice_file": "01_电子发票/03_开发板C_99.00元_发票12345678901234567892.pdf",
+      "order_files": [
+        "02_订单截图/03_开发板C_订单99.00元_SO20260118001.png"
+      ],
+      "payment_file": "02_订单截图/支付凭证/03_开发板C_支付99.00元_SO20260118001.jpg",
+      "extra_files": [
+        {
+          "path": "01_电子发票/OFD与XML/03_开发板C_发票.ofd",
+          "suffix": "发票-OFD原件"
+        },
+        {
+          "path": "01_电子发票/OFD与XML/03_开发板C_发票-OFD转换件.pdf",
+          "suffix": "发票-OFD转换件"
+        }
+      ],
+      "status": "complete",
+      "note": "含 OFD 原件，交付夹另附转换件"
+    }
+  ],
+  "pending": [
+    {
+      "code": "01",
+      "item": "测试仪器B",
+      "amount": 199.00,
+      "issue": "缺订单详情",
+      "folder": "04_未报销发票_待补材料/01_测试仪器B_199.00元",
+      "invoice_file": "04_未报销发票_待补材料/01_测试仪器B_199.00元/发票.pdf",
+      "order_files": [],
+      "payment_file": "04_未报销发票_待补材料/01_测试仪器B_199.00元/支付截图.jpg"
+    }
+  ],
+  "excluded": [
+    {
+      "item": "云服务费",
+      "amount": 500.00,
+      "reason": "按要求不报销",
+      "file": "99_其他/不报销/云服务费_发票.pdf"
+    }
+  ],
+  "delivery": {
+    "folder": "报销交付_YYYYMMDD",
+    "workbook": "财务报表.xlsx"
+  }
+}

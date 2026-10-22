@@ -1,0 +1,6 @@
+# 核心依赖
+pdfplumber>=0.10
+openpyxl>=3.0
+
+# 可选：OFD 转 PDF（只有处理 .ofd 文件时才需要）
+easyofd

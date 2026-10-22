@@ -1,0 +1,51 @@
+# === 真实票据与报销产出：永远不要提交 ===
+01_电子发票/
+02_订单截图/
+03_新增待整理/
+04_未报销发票_待补材料/
+98_技术资料_与报销无关/
+99_其他/
+_原始备份_*/
+报销交付_*/
+财务报表*.xlsx
+发票核对报告.txt
+支付截图待补清单.txt
+截图齐全情况.txt
+manifest.json
+invoices.json
+
+# 票据/凭证文件类型（文档和示例目录除外）
+*.pdf
+*.ofd
+*.xml
+*.jpg
+*.jpeg
+*.png
+*.bmp
+*.webp
+*.gif
+*.tif
+*.tiff
+*.zip
+*.rar
+*.7z
+*.xlsx
+*.xls
+*.csv
+!docs/assets/**
+!examples/**
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+
+# 编辑器 / 系统
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+~$*.xlsx
